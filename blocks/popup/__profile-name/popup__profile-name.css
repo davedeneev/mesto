@@ -1,0 +1,21 @@
+.popup__profile-name {
+    width: 100%;
+    padding: 0 0 13px;
+    border:  none;
+    outline: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    margin-top: 54px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__profile-name {
+        max-width: 238px;
+        margin-top: 75px;
+    }
+}
