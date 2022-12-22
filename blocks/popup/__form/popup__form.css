@@ -1,10 +1,11 @@
-.popup__profile-form {
-    margin: 0 auto;
+.popup__form {
+    margin: 54px auto 0;
     max-width: 358px;
 }
 
 @media screen and (max-width: 767px) {
-    .popup__profile-form {
+    .popup__form {
         max-width: 238px;
+        margin-top: 75px;
     }
 }

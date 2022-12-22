@@ -24,11 +24,9 @@
 @import url(../blocks/place-card/__like-btn/_active/place-card__like-btn_active.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/popup/__profile-container/popup__profile-container.css);
-@import url(../blocks/popup/__profile-desc/popup__profile-desc.css);
 @import url(../blocks/popup/__container/popup__container.css);
-@import url(../blocks/popup/__profile-exit-btn/popup__profile-exit-btn.css);
-@import url(../blocks/popup/__profile-form/popup__profile-form.css);
-@import url(../blocks/popup/__profile-name/popup__profile-name.css);
-@import url(../blocks/popup/__profile-save-btn/popup__profile-save-btn.css);
-@import url(../blocks/popup/__profile-title/popup__profile-title.css);
+@import url(../blocks/popup/__exit-btn/popup__exit-btn.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__save-btn/popup__save-btn.css);
+@import url(../blocks/popup/__title/popup__title.css);

@@ -18,9 +18,9 @@
                     <div class="profile__info">
                         <div class="profile__name-block">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
-                            <button type="button" class="profile__edit-btn"></button>
+                            <button type="button" aria-label="Редактировать" class="profile__edit-btn"></button>
                         </div>
-                        <h2 class="profile__description">Исследователь океана</h2>
+                        <p class="profile__description">Исследователь океана</p>
                     </div>
                 </div>
                 <button type="button" class="profile__add-btn"></button>
@@ -75,13 +75,13 @@
         </footer>
         <div class="popup">
             <div class="popup__container">
-                <button type="button" class="popup__profile-exit-btn"></button>
+                <button type="button" class="popup__exit-btn"></button>
                 <div class="popup__profile-container">
-                    <h2 class="popup__profile-title">Редактировать профиль</h2>
-                    <form class="popup__profile-form">
-                        <input name="name" type="text" placeholder="Имя" class="popup__profile-name">
-                        <input name="desc" type="text" placeholder="О себе" class="popup__profile-desc">
-                        <button type="submit" class="popup__profile-save-btn">Сохранить</button>
+                    <h2 class="popup__title">Редактировать профиль</h2>
+                    <form name="profile-edit" class="popup__form">
+                        <input name="name" type="text" placeholder="Имя" class="popup__input popup__input_type_name">
+                        <input name="desc" type="text" placeholder="О себе" class="popup__input popup__input_type_desc">
+                        <button type="submit" class="popup__save-btn">Сохранить</button>
                     </form>
                 </div>
             </div>

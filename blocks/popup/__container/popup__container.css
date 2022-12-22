@@ -6,11 +6,13 @@
     background-color: white;
     box-shadow: 0 0 25px rgba(0, 0, 0, .15);
     text-align: left;
+    padding-top: 34px;
 }
 
 @media screen and (max-width: 767px) {
     .popup__container {
         width: 282px;
         text-align: center;
+        padding-top: 25px;
     }
 }
