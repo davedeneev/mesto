@@ -10,16 +10,20 @@ const inputDesc = document.querySelector('.popup__input_type_desc');
 function showProfilePopup() {
     inputName.value = setName.textContent;
     inputDesc.value = setDesc.textContent;
-    setPopup.classList.toggle('popup_opened');
+    setPopup.classList.add('popup_opened');
+}
+
+function hideProfilePopup() {
+    setPopup.classList.remove('popup_opened');
 }
 
 function saveProfilePopup(evt) {
     evt.preventDefault();
     setName.textContent = inputName.value;
     setDesc.textContent = inputDesc.value;
-    setPopup.classList.remove('popup_opened');
+    hideProfilePopup();
 }
 
 btnProfileEdit.addEventListener('click', showProfilePopup);
-btnExitProfile.addEventListener('click', showProfilePopup);
+btnExitProfile.addEventListener('click', hideProfilePopup);
 formProfile.addEventListener('submit', saveProfilePopup);
