@@ -1,15 +1,17 @@
-const setPopup = document.querySelector('.popup');
+const setPopupProfile = document.querySelector('.popup_type-edit_profile');
+const setPopupCard = document.querySelector('.popup_type-add_card');
 const setPopupImg = document.querySelector('.popup_type_img');
 const btnProfileEdit = document.querySelector('.profile__edit-btn');
 const btnExit = document.querySelectorAll('.popup__exit-btn');
-const formProfile = document.querySelector('.popup__form');
+const formProfile = document.querySelector('form[name="profile-edit"]');
+const formCard = document.querySelector('form[name="card-add"]');
 const btnAddCard = document.querySelector('.profile__add-btn');
-const popupTitle = setPopup.querySelector('.popup__title');
-const popupBtnName = setPopup.querySelector('.popup__save-btn');
-const setName = document.querySelector('.profile__name');
-const setDesc = document.querySelector('.profile__description');
-const inputName = document.querySelector('.popup__input_type_name');
-const inputDesc = document.querySelector('.popup__input_type_desc');
+const setProfileName = document.querySelector('.profile__name');
+const setProfileDesc = document.querySelector('.profile__description');
+const inputProfileName = document.querySelector('input.popup__input.popup__input_type_name[name="profile-name"]');
+const inputProfileDesc = document.querySelector('input.popup__input.popup__input_type_desc[name="profile-desc"]');
+const inputCardName = document.querySelector('input.popup__input.popup__input_type_name[name="card-name"]');
+const inputCardUrl = document.querySelector('input.popup__input.popup__input_type_desc[name="card-url"]');
 const cardTemplate = document.querySelector('#card-template').content;
 const placesSection = document.querySelector('.places');
 const initialCards = [
@@ -38,9 +40,6 @@ const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
-//Меняем "none" на "flex", чтобы при открытии страницы поп-ап не появлялся, а transition работал
-setPopup.setAttribute('style', 'display:flex');
-setPopupImg.setAttribute('style', 'display:flex');
 
 //Функция добавления карточки
 function modifyCard(nameCard, linkCard) {
@@ -92,15 +91,6 @@ function showPopup(popupClass) {
     popupClass.classList.add('popup_opened');
 }
 
-function setPlaceholder(title, name, desc, btn) {
-    inputName.value = '';
-    inputDesc.value = '';
-    popupTitle.textContent = title;
-    inputName.setAttribute('placeholder', name);
-    inputDesc.setAttribute('placeholder', desc);
-    popupBtnName.textContent = btn;
-}
-
 function hidePopup() {
     const listPopupOpened = document.querySelectorAll('.popup_opened');
     listPopupOpened.forEach((popup) => {
@@ -114,27 +104,27 @@ function hidePopup() {
 
 function savePopup(evt) {
     evt.preventDefault();
-    setName.textContent = inputName.value;
-    setDesc.textContent = inputDesc.value;
+    setProfileName.textContent = inputProfileName.value;
+    setProfileDesc.textContent = inputProfileDesc.value;
     hidePopup();
 }
 
 function addCardPopup(evt) {
     evt.preventDefault();
-    modifyCard(inputName.value, inputDesc.value);
+    modifyCard(inputCardName.value, inputCardUrl.value);
     hidePopup();
 }
 
 btnProfileEdit.addEventListener('click', function () {
-    setPlaceholder('Редактировать профиль', 'Имя', 'О себе', 'Сохранить');
-    showPopup(setPopup);
-    inputName.value = setName.textContent;
-    inputDesc.value = setDesc.textContent;
+    showPopup(setPopupProfile);
+    inputProfileName.value = setProfileName.textContent;
+    inputProfileDesc.value = setProfileDesc.textContent;
     formProfile.addEventListener('submit', savePopup);
 });
 
 btnAddCard.addEventListener('click', function () {
-    setPlaceholder('Новое место', 'Название', 'Ссылка на картинку', 'Создать');
-    showPopup(setPopup);
-    formProfile.addEventListener('submit', addCardPopup);
+    inputCardName.value = '';
+    inputCardUrl.value = '';
+    showPopup(setPopupCard);
+    formCard.addEventListener('submit', addCardPopup);
 });
