@@ -26,64 +26,39 @@
                 <button type="button" class="profile__add-btn"></button>
             </section>
             <section class="places">
-                <article class="place-card">
-                    <img src="./images/karachaevsk.png" alt="Карачаевск" class="place-card__image">
-                    <div class="place-card__description">
-                        <h2 class="place-card__title">Карачаевск</h2>
-                        <button type="button" class="place-card__like-btn"></button>
-                    </div>
-                </article>
-                <article class="place-card">
-                    <img src="./images/elbrus.png" alt="Гора Эльбрус" class="place-card__image">
-                    <div class="place-card__description">
-                        <h2 class="place-card__title">Гора Эльбрус</h2>
-                        <button type="button" class="place-card__like-btn"></button>
-                    </div>
-                </article>
-                <article class="place-card">
-                    <img src="./images/dombay.png" alt="Домбай" class="place-card__image">
-                    <div class="place-card__description">
-                        <h2 class="place-card__title">Домбай</h2>
-                        <button type="button" class="place-card__like-btn"></button>
-                    </div>
-                </article>
-                <article class="place-card">
-                    <img src="./images/elbrus.png" alt="Гора Эльбрус" class="place-card__image">
-                    <div class="place-card__description">
-                        <h2 class="place-card__title">Гора Эльбрус</h2>
-                        <button type="button" class="place-card__like-btn"></button>
-                    </div>
-                </article>
-                <article class="place-card">
-                    <img src="./images/dombay.png" alt="Домбай" class="place-card__image">
-                    <div class="place-card__description">
-                        <h2 class="place-card__title">Домбай</h2>
-                        <button type="button" class="place-card__like-btn"></button>
-                    </div>
-                </article>
-                <article class="place-card">
-                    <img src="./images/karachaevsk.png" alt="Карачаево-Черкессия" class="place-card__image">
-                    <div class="place-card__description">
-                        <h2 class="place-card__title">Карачаево-Черкессия</h2>
-                        <button type="button" class="place-card__like-btn"></button>
-                    </div>
-                </article>
             </section>
         </main>
         <footer class="footer">
-            <p class="footer__copyright">© 2022 Dmitry Vedeneev</p>
+            <p class="footer__copyright">© 2023 Dmitry Vedeneev</p>
         </footer>
-        <div class="popup">
+        <section class="popup">
             <div class="popup__container">
                 <button type="button" class="popup__exit-btn"></button>
-                <h2 class="popup__title">Редактировать профиль</h2>
+                <h2 class="popup__title">dummy</h2>
                 <form name="profile-edit" class="popup__form">
-                    <input name="name" type="text" placeholder="Имя" class="popup__input popup__input_type_name">
-                    <input name="desc" type="text" placeholder="О себе" class="popup__input popup__input_type_desc">
-                    <button type="submit" class="popup__save-btn">Сохранить</button>
+                    <input name="name" type="text" placeholder="dummy" class="popup__input popup__input_type_name">
+                    <input name="desc" type="text" placeholder="dummy" class="popup__input popup__input_type_desc">
+                    <button type="submit" class="popup__save-btn">dummy</button>
                 </form>
             </div>
-        </div>
+        </section>
+        <section class="popup popup_type_img">
+            <div class="popup__container-img">
+                <button type="button" class="popup__exit-btn"></button>
+                <img class="popup__img" src="dummy" alt="dummy">
+                <h2 class="popup__desc-img">dummy</h2>
+            </div>
+        </section>
+        <template id="card-template">
+            <article class="place-card">
+                <img src="dummy" class="place-card__image">
+                <button type="button" class="place-card__delete-btn"></button>
+                <div class="place-card__description">
+                    <h2 class="place-card__title"></h2>
+                    <button type="button" class="place-card__like-btn"></button>
+                </div>
+            </article>
+        </template>
     </div>
     <script src="./scripts/index.js"></script>
 </body>

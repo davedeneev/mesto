@@ -1,5 +1,6 @@
 .place-card {
     display: flex;
+    position: relative;
     flex-direction: column;
     background-color: white;
     color: black;
