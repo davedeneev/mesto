@@ -18,6 +18,8 @@ const placesSection = document.querySelector('.places');
 const popupImg = popupTypeImg.querySelector('.popup__img');
 const popupDescImg = popupTypeImg.querySelector('.popup__desc-img');
 const placeCard = cardTemplate.querySelector('.place-card');
+const cardFormSubmitButton = popupCard.querySelector('.popup__save-btn')
+const cardFormInputs = Array.from(popupCard.querySelectorAll(".popup__input"));
 
 //Функция создания карточки
 function createCard(nameCard, linkCard) {
@@ -55,18 +57,6 @@ function createCard(nameCard, linkCard) {
 function addCard(card) {
     placesSection.prepend(card);
 }
-//Загружаем карточки по-умолчанию
-initialCards.reverse().forEach((item) => {
-    const nameCardDefault =  item.name;
-    const linkCardDefault =  item.link;
-    addCard(createCard(nameCardDefault, linkCardDefault));
-});
-//Обработчик закрытия поп-апа
-listBtnExit.forEach((btn) => {
-    btn.addEventListener('click', function () {
-        hidePopup();
-    })
-});
 //Функция закрытия поп-апа по клавише Esc
 function handleEscape(evt) {
     if (evt.key === 'Escape') {
@@ -78,6 +68,7 @@ function showPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', handleEscape);
 }
+
 //Функция скрытия поп-апа
 function hidePopup() {
     const popupOpened = document.querySelector('.popup_opened');
@@ -91,16 +82,27 @@ function handleProfileFormSubmit(evt) {
     profileDesc.textContent = profileDescInput.value;
     hidePopup();
 }
+
 //Функция добавления карточки из поп-апа
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
-    const popupOpened = document.querySelector('.popup_opened');
-    const inputList = Array.from(popupOpened.querySelectorAll(formSettings.inputSelector));
     addCard(createCard(cardNameInput.value, cardUrlInput.value));
-    popupOpened.querySelector('.popup__form').reset();
-    toggleButtonState(inputList,  popupOpened.querySelector('.popup__save-btn'), formSettings);
+    formCard.reset();
+    toggleButtonState(cardFormInputs,  cardFormSubmitButton, formSettings);
     hidePopup();
 }
+//Загружаем карточки по-умолчанию
+initialCards.reverse().forEach((item) => {
+    const nameCardDefault =  item.name;
+    const linkCardDefault =  item.link;
+    addCard(createCard(nameCardDefault, linkCardDefault));
+});
+//Обработчик закрытия поп-апа
+listBtnExit.forEach((btn) => {
+    btn.addEventListener('click', function () {
+        hidePopup();
+    })
+});
 
 formProfile.addEventListener('submit', handleProfileFormSubmit);
 formCard.addEventListener('submit', handleCardFormSubmit);
