@@ -10,17 +10,4 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    margin-top: 30px;
-    margin-bottom: 48px;
-}
-
-.popup__input:first-child {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-@media screen and (max-width: 767px) {
-    .popup__input {
-        margin-bottom: 45px;
-    }
 }

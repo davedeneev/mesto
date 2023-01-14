@@ -91,14 +91,28 @@ listBtnExit.forEach((btn) => {
         hidePopup();
     })
 });
+//Функция закрытия поп-апа по клавише Esc
+function handleEscape(evt) {
+    if (evt.key === 'Escape') {
+        hidePopup();
+    }
+}
 //Функция показа поп-апа
 function showPopup(popupClass) {
     popupClass.classList.add('popup_opened');
+    document.addEventListener('keydown', handleEscape);
+    //Закрытие поп-апа по нажатию на оверлей
+    popupClass.addEventListener("mousedown",(evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            hidePopup();
+        }
+    })
 }
 //Функция скрытия поп-апа
 function hidePopup() {
     const popupOpened = document.querySelector('.popup_opened');
     popupOpened.classList.remove('popup_opened');
+    document.removeEventListener('keydown', handleEscape);
 }
 //Функция сохранения введенных в поп-ап данных
 function savePopup(evt) {
