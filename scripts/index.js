@@ -40,10 +40,13 @@ const formSettings = {
 const popups = document.querySelectorAll('.popup');
 const popupProfile = document.querySelector('.popup_type-edit_profile');
 const popupCard = document.querySelector('.popup_type-add_card');
+const popupTypeImg = document.querySelector('.popup_type_img');
+const popupImg = popupTypeImg.querySelector('.popup__img');
+const popupDescImg = popupTypeImg.querySelector('.popup__desc-img');
 const btnProfileEdit = document.querySelector('.profile__edit-btn');
-const listBtnExit = document.querySelectorAll('.popup__exit-btn');
-const formProfile = document.querySelector('form[name="profile-edit"]');
-const formCard = document.querySelector('form[name="card-add"]');
+const closeButtons = document.querySelectorAll('.popup__exit-btn');
+const formProfile = document.forms["profile-edit"];
+const formCard = document.forms["card-add"];
 const btnAddCard = document.querySelector('.profile__add-btn');
 const profileName = document.querySelector('.profile__name');
 const profileDesc = document.querySelector('.profile__description');
@@ -56,12 +59,6 @@ const placesSection = document.querySelector('.places');
 const validatorPopupProfile = new FormValidator(formSettings, popupProfile);
 const validatorPopupCard = new FormValidator(formSettings, popupCard);
 
-//Функция создания карточки
-function generateNewCard(card) {
-    const newCard = new Card(card, "#card-template").generateCard();
-    return newCard;
-}
-
 //Функция добавления карточки в разметку
 function addCard(card) {
     placesSection.prepend(card);
@@ -71,6 +68,21 @@ function addCard(card) {
 export function showPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', handleEscape);
+}
+
+//Метод наполнения и открытия поп-апа
+function handleCardClick(name, link) {
+    popupImg.src = link;
+    popupImg.alt = name;
+    popupDescImg.textContent = name;
+
+    return showPopup(popupTypeImg);
+}
+
+//Функция создания карточки
+function generateNewCard(card) {
+    const newCard = new Card(card, "#card-template", handleCardClick).generateCard();
+    return newCard;
 }
 
 //Функция скрытия поп-апа
@@ -104,6 +116,7 @@ function handleCardFormSubmit(evt) {
 
     addCard(generateNewCard(cardTemplate));
     formCard.reset();
+    validatorPopupCard.resetValidation();
     hidePopup();
 }
 
@@ -116,7 +129,7 @@ initialCards.reverse().forEach((item) => {
 });
 
 //Обработчик закрытия поп-апа
-listBtnExit.forEach((btn) => {
+closeButtons.forEach((btn) => {
     btn.addEventListener('click', function () {
         hidePopup();
     })
@@ -132,9 +145,11 @@ btnProfileEdit.addEventListener('click', function () {
 });
 
 btnAddCard.addEventListener('click', function () {
-    cardNameInput.value = '';
-    cardUrlInput.value = '';
     showPopup(popupCard);
+
+    if (!cardUrlInput.value && !cardNameInput.value) {
+        validatorPopupCard.resetValidation();
+    }
 });
 
 //Закрытие поп-апа по нажатию на оверлей

@@ -1,14 +1,10 @@
-import {showPopup} from "./index.js";
-
 //Класс карточки фотографии
 export default class Card {
-    constructor(data, templateSelector) {
+    constructor(data, templateSelector, handleCardClick) {
         this._templateSelector = templateSelector;
         this._name = data.name;
         this._link = data.link;
-        this._popupTypeImg = document.querySelector('.popup_type_img');
-        this._popupImg = this._popupTypeImg.querySelector('.popup__img');
-        this._popupDescImg = this._popupTypeImg.querySelector('.popup__desc-img');
+        this._handleCardClick = handleCardClick;
     }
 
     //Метод для получения копии шаблона из файла разметки
@@ -38,7 +34,7 @@ export default class Card {
     _setEventListeners() {
         this._btnLike.addEventListener("click", () => {this._likeToggle()});
         this._btnDelete.addEventListener("click", () => {this._deleteCard()});
-        this._cardImage.addEventListener("click", () => {this._openImgPopup()});
+        this._cardImage.addEventListener("click", () => {this._handleCardClick(this._name, this._link)});
     }
 
     _likeToggle() {
@@ -47,14 +43,5 @@ export default class Card {
 
     _deleteCard() {
         this._element.remove();
-    }
-
-    //Метод наполнения и открытия поп-апа
-    _openImgPopup() {
-        this._popupImg.src = this._link;
-        this._popupImg.alt = this._name;
-        this._popupDescImg.textContent = this._name
-
-        return showPopup(this._popupTypeImg);
     }
 }
