@@ -2,8 +2,8 @@
 export default class Card {
     constructor(data, templateSelector, handleCardClick) {
         this._templateSelector = templateSelector;
-        this._name = Object.values(data)[0];
-        this._link = Object.values(data)[1];
+        this._name = data.name;
+        this._link = data.link;
         this._handleCardClick = handleCardClick;
     }
 
@@ -31,12 +31,12 @@ export default class Card {
     }
 
     _setEventListeners() {
-        this._btnLike.addEventListener("click", () => {this._likeToggle()});
+        this._btnLike.addEventListener("click", () => {this._toggleLike()});
         this._btnDelete.addEventListener("click", () => {this._deleteCard()});
         this._cardImage.addEventListener('click', this._handleCardClick);
     }
 
-    _likeToggle() {
+    _toggleLike() {
         this._btnLike.classList.toggle("place-card__like-btn_active");
     }
 

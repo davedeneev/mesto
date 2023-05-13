@@ -17,8 +17,6 @@ import {
     profileDesc,
     profileNameInput,
     profileDescInput,
-    cardNameInput,
-    cardUrlInput,
     placesSection
 } from '../utils/constants.js';
 
@@ -74,8 +72,5 @@ btnProfileEdit.addEventListener('click', function () {
 
 btnAddCard.addEventListener('click', function () {
     popupAddCard.open();
-
-    if (!cardUrlInput.value && !cardNameInput.value) {
-        validatorPopupCard.resetValidation();
-    }
+    validatorPopupCard.resetValidation();
 });

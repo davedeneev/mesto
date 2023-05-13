@@ -1,10 +1,10 @@
 //Класс валидации данных в формах
 export default class FormValidator {
     constructor(formSelectors, formElement) {
-        this._formElement = formElement;
+        this._formElement = document.querySelector(formElement);
         this._formSelectors = formSelectors;
         this._buttonElement = this._formElement.querySelector(this._formSelectors.submitButtonSelector);
-        this._inputList = Array.from(formElement.querySelectorAll(this._formSelectors.inputSelector));
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._formSelectors.inputSelector));
     }
 
     _showInputError(inputElement, errorMessage) {
