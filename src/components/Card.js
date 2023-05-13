@@ -2,12 +2,11 @@
 export default class Card {
     constructor(data, templateSelector, handleCardClick) {
         this._templateSelector = templateSelector;
-        this._name = data.name;
-        this._link = data.link;
+        this._name = Object.values(data)[0];
+        this._link = Object.values(data)[1];
         this._handleCardClick = handleCardClick;
     }
 
-    //Метод для получения копии шаблона из файла разметки
     _getTemplate() {
         const cardElement = document
             .querySelector(this._templateSelector)
@@ -17,7 +16,7 @@ export default class Card {
 
         return cardElement;
     }
-    //Публичный метод создания карточки фотографии
+
     generateCard() {
         this._element = this._getTemplate();
         this._cardImage = this._element.querySelector('.place-card__image');
@@ -30,11 +29,11 @@ export default class Card {
 
         return this._element;
     }
-    //Метод для установки слушателей
+
     _setEventListeners() {
         this._btnLike.addEventListener("click", () => {this._likeToggle()});
         this._btnDelete.addEventListener("click", () => {this._deleteCard()});
-        this._cardImage.addEventListener("click", () => {this._handleCardClick(this._name, this._link)});
+        this._cardImage.addEventListener('click', this._handleCardClick);
     }
 
     _likeToggle() {
