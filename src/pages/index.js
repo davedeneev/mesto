@@ -4,28 +4,140 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupConfirmation from '../components/PopupConfirmation.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import {
-    initialCards,
     formSettings,
     popupProfile,
+    popupAvatar,
     popupCard,
     popupTypeImg,
+    popupConfirm,
     btnProfileEdit,
     btnAddCard,
     profileName,
     profileDesc,
     profileNameInput,
     profileDescInput,
-    placesSection
+    placesSection,
+    profileAvatar,
+    btnAvatarEdit
 } from '../utils/constants.js';
 
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-69',
+    headers: {
+        authorization: 'aac91b4b-cd9c-449e-a05e-4878339d70cf',
+        'Content-Type': 'application/json'
+    }
+});
+
 const validatorPopupProfile = new FormValidator(formSettings, popupProfile);
+const validatorPopupAvatar = new FormValidator(formSettings, popupAvatar);
 const validatorPopupCard = new FormValidator(formSettings, popupCard);
+
+const userData = new UserInfo({
+    profileName: profileName,
+    profileDesc: profileDesc,
+    profileAvatar: profileAvatar
+});
+
+
+function submitCardForm(data) {
+    popupAddCard.updateTitleText();
+    return api.addCard(data)
+
+        .then((card) => {
+            popupAddCard.updateTitleText();
+            cards.addItem(generateNewCard(card))
+            popupAddCard.close();
+        })
+        .catch((error) => {
+            console.log(`Ошибка: ${error}`);
+        });
+}
+
+function submitProfileForm(user) {
+    popupEditProfile.updateTitleText();
+    return api.editUserProfile(user)
+
+        .then((inputs) => {
+            popupEditProfile.updateTitleText();
+            userData.setUserInfo(inputs);
+            popupEditProfile.close();
+        })
+        .catch((error) => {
+            console.log(`Ошибка: ${error}`);
+        });
+}
+
+function submitAvatarForm(user) {
+    popupEditAvatar.updateTitleText();
+    return api.editUserAvatar(user)
+
+        .then((inputs) => {
+            popupEditAvatar.updateTitleText();
+            userData.setUserInfo(inputs);
+            popupEditAvatar.close();
+        })
+        .catch((error) => {
+            console.log(`Ошибка: ${error}`);
+        });
+}
+
+function submitConfirmationForm(card) {
+    return api.deleteCard(card._id)
+
+        .then(() => {
+            card.removeCard();
+            popupConfirmation.close();
+        })
+        .catch((error) => {
+            console.log(`Ошибка: ${error}`);
+        });
+}
+
+function handleCardClick(event) {
+    popupImgSetup.open(event.target);
+}
+
+function uploadAddLike(card) {
+    return api.addLike(card._id)
+        .then((data) => {
+            card.like();
+            card.countLikes(data);
+        })
+        .catch((error) => {
+            console.log(`Ошибка: ${error}`);
+        });
+}
+
+function uploadRemoveLike(card) {
+    return api.removeLike(card._id)
+        .then((data) => {
+            card.dislike();
+            card.countLikes(data);
+        })
+        .catch((error) => {
+            console.log(`Ошибка: ${error}`);
+        });
+}
+
+function generateNewCard(card) {
+    const newCard = new Card(
+        card,
+        userData.getUserInfo().profileID,
+        "#card-template",
+        handleCardClick,
+        (cardObj) => {popupConfirmation.open(cardObj)},
+        (cardObj) => {uploadAddLike(cardObj)},
+        (cardObj) => {uploadRemoveLike(cardObj)}).generateCard();
+    return newCard;
+}
 
 const cards = new Section(
     {
-        items: initialCards,
         renderer: (item) => {
             const cardItem = generateNewCard(item);
             cards.addItem(cardItem);
@@ -34,43 +146,47 @@ const cards = new Section(
     placesSection
 );
 
-const userData = new UserInfo({
-    profileName: profileName,
-    profileDesc: profileDesc,
-});
-
-function generateNewCard(card) {
-    const newCard = new Card(card, "#card-template", handleCardClick).generateCard();
-    return newCard;
-}
-
-const popupEditProfile = new PopupWithForm(popupProfile, (inputs) => userData.setUserInfo(inputs));
+const popupEditProfile = new PopupWithForm(popupProfile, submitProfileForm);
 popupEditProfile.setEventListeners();
 
-const popupAddCard = new PopupWithForm(popupCard, (data) => { cards.addItem(generateNewCard(data)); });
+const popupEditAvatar = new PopupWithForm(popupAvatar, submitAvatarForm);
+popupEditAvatar.setEventListeners();
+
+const popupAddCard = new PopupWithForm(popupCard, submitCardForm);
 popupAddCard.setEventListeners();
 
 const popupImgSetup = new PopupWithImage(popupTypeImg);
 popupImgSetup.setEventListeners();
 
-function handleCardClick(event) {
-    popupImgSetup.open(event.target)
-}
+const popupConfirmation = new PopupConfirmation(popupConfirm, submitConfirmationForm);
+popupConfirmation.setEventListeners();
 
 validatorPopupProfile.enableValidation();
+validatorPopupAvatar.enableValidation();
 validatorPopupCard.enableValidation();
-
-cards.renderItems(initialCards.reverse());
 
 btnProfileEdit.addEventListener('click', function () {
     popupEditProfile.open();
-    const { profileName, profileDesc } = userData.getUserInfo();
-    profileNameInput.value = profileName;
-    profileDescInput.value = profileDesc;
+    const userInfo = userData.getUserInfo();
+    profileNameInput.value = userInfo.profileName;
+    profileDescInput.value = userInfo.profileDesc;
     validatorPopupProfile.resetValidation();
+});
+
+btnAvatarEdit.addEventListener('click', function () {
+    popupEditAvatar.open();
+    validatorPopupAvatar.resetValidation();
 });
 
 btnAddCard.addEventListener('click', function () {
     popupAddCard.open();
     validatorPopupCard.resetValidation();
 });
+
+Promise.all([api.getUser(), api.getInitialCards()])
+    .then(([userInfo, initialCards]) => {
+        userData.setUserInfo(userInfo);
+        cards.renderItems(initialCards.reverse());
+    })
+
+    .catch((error) => console.log(`Ошибка: ${error}`));

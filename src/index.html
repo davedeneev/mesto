@@ -13,13 +13,16 @@
         <main>
             <section class="profile">
                 <div class="profile__wrapper">
-                    <img class="profile__image" src="<%=require('./images/Jacques-Cousteau.png')%>" alt="Аватар пользователя">
+                    <img class="profile__image" src="#" alt="Аватар пользователя">
+                    <button type="button" class="profile__avatar-btn">
+                        <img class="profile__edit-avatar" src="<%=require('./images/edit_pic.svg')%>" alt="Обновить аватар">
+                    </button>
                     <div class="profile__info">
                         <div class="profile__name-block">
-                            <h1 class="profile__name">Жак-Ив Кусто</h1>
+                            <h1 class="profile__name"></h1>
                             <button type="button" aria-label="Редактировать" class="profile__edit-btn"></button>
                         </div>
-                        <p class="profile__description">Исследователь океана</p>
+                        <p class="profile__description"></p>
                     </div>
                 </div>
                 <button type="button" class="profile__add-btn"></button>
@@ -30,6 +33,7 @@
         <footer class="footer">
             <p class="footer__copyright">© 2023 Dmitry Vedeneev</p>
         </footer>
+
         <section class="popup popup_type-edit_profile">
             <div class="popup__container">
                 <button type="button" class="popup__exit-btn"></button>
@@ -41,7 +45,7 @@
                         <span class="popup__input-error input-profile-name-error"></span>
                     </label>
                     <label class="popup__input-block">
-                        <input name="description" type="text" id="input-profile-desc" placeholder="О себе" class="popup__input popup__input_type_desc"
+                        <input name="about" type="text" id="input-profile-desc" placeholder="О себе" class="popup__input popup__input_type_desc"
                                minlength="2" maxlength="200" required>
                         <span class="popup__input-error input-profile-desc-error"></span>
                     </label>
@@ -49,6 +53,22 @@
                 </form>
             </div>
         </section>
+
+        <section class="popup popup_type-edit_avatar">
+            <div class="popup__container">
+                <button type="button" class="popup__exit-btn"></button>
+                <h2 class="popup__title">Обновить аватар</h2>
+                <form name="avatar-edit" class="popup__form" novalidate>
+                    <label class="popup__input-block">
+                        <input name="avatar" type="url" id="input-profile-avatar" placeholder="Ссылка на картинку"
+                               class="popup__input popup__input_type_avatar" required>
+                        <span class="popup__input-error input-profile-avatar-error"></span>
+                    </label>
+                    <button type="submit" class="popup__save-btn">Сохранить</button>
+                </form>
+            </div>
+        </section>
+
         <section class="popup popup_type-add_card">
             <div class="popup__container">
                 <button type="button" class="popup__exit-btn"></button>
@@ -68,6 +88,7 @@
                 </form>
             </div>
         </section>
+
         <section class="popup popup_type_img">
             <div class="popup__container-img">
                 <button type="button" class="popup__exit-btn"></button>
@@ -75,13 +96,27 @@
                 <h2 class="popup__desc-img"></h2>
             </div>
         </section>
+
+        <section class="popup popup_type-confirmation">
+            <div class="popup__container">
+                <button type="button" class="popup__exit-btn"></button>
+                <h2 class="popup__title">Вы уверены?</h2>
+                <form name="confirmation" class="popup__form" novalidate>
+                    <button type="submit" class="popup__save-btn">Да</button>
+                </form>
+            </div>
+        </section>
+
         <template id="card-template">
             <article class="place-card">
                 <img src="#" class="place-card__image">
                 <button type="button" class="place-card__delete-btn"></button>
                 <div class="place-card__description">
                     <h2 class="place-card__title"></h2>
-                    <button type="button" class="place-card__like-btn"></button>
+                    <div class="place-card__like-block">
+                        <button type="button" class="place-card__like-btn"></button>
+                        <p class="place-card__like-counter"></p>
+                    </div>
                 </div>
             </article>
         </template>
