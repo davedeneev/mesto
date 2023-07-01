@@ -32,24 +32,17 @@ export default class Card {
         this._element.querySelector('.place-card__title').textContent = this._name;
         this._btnLike = this._element.querySelector('.place-card__like-btn');
         this._likesCounter = this._element.querySelector('.place-card__like-counter');
-        this._likesCounter.textContent = this._likes.length;
         this._btnDelete = this._element.querySelector('.place-card__delete-btn');
         if (this._ownerID !== this._userID) {
             this._btnDelete.remove();
         }
         this._setEventListeners();
-        this._isLiked();
+        this._countLikes();
         return this._element;
     }
 
-    _isLiked() {
-        this._likes.forEach((liker) => {
-            if (liker._id === this._userID) {
-                this.like();
-            } else {
-                this.dislike();
-            }
-        });
+    isLiked() {
+        return this._likes.some((like) => like._id === this._userID)
     }
 
     like() {
@@ -60,8 +53,14 @@ export default class Card {
         this._btnLike.classList.remove("place-card__like-btn_active");
     }
 
-    countLikes(data) {
-        this._likesCounter.textContent = `${data.likes.length}`;
+    _countLikes() {
+        this._likesCounter.textContent = this._likes.length;
+        this._btnLike.classList.toggle("place-card__like-btn_active", this.isLiked());
+    }
+
+    updateLikes(data) {
+        this._likes = data.likes;
+        this._countLikes()
     }
 
     removeCard() {

@@ -46,56 +46,56 @@ const userData = new UserInfo({
 
 function submitCardForm(data) {
     popupAddCard.updateTitleText();
-    return api.addCard(data)
+    api.addCard(data)
 
-        .then((card) => {
-            popupAddCard.updateTitleText();
-            cards.addItem(generateNewCard(card))
-            popupAddCard.close();
-        })
-        .catch((error) => {
-            console.log(`Ошибка: ${error}`);
-        });
+    .then((card) => {
+        popupAddCard.updateTitleText();
+        cards.addItem(generateNewCard(card))
+        popupAddCard.close();
+    })
+    .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+    });
 }
 
 function submitProfileForm(user) {
     popupEditProfile.updateTitleText();
-    return api.editUserProfile(user)
+    api.editUserProfile(user)
 
-        .then((inputs) => {
-            popupEditProfile.updateTitleText();
-            userData.setUserInfo(inputs);
-            popupEditProfile.close();
-        })
-        .catch((error) => {
-            console.log(`Ошибка: ${error}`);
-        });
+    .then((inputs) => {
+        popupEditProfile.updateTitleText();
+        userData.setUserInfo(inputs);
+        popupEditProfile.close();
+    })
+    .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+    });
 }
 
 function submitAvatarForm(user) {
     popupEditAvatar.updateTitleText();
-    return api.editUserAvatar(user)
+    api.editUserAvatar(user)
 
-        .then((inputs) => {
-            popupEditAvatar.updateTitleText();
-            userData.setUserInfo(inputs);
-            popupEditAvatar.close();
-        })
-        .catch((error) => {
-            console.log(`Ошибка: ${error}`);
-        });
+    .then((inputs) => {
+        popupEditAvatar.updateTitleText();
+        userData.setUserInfo(inputs);
+        popupEditAvatar.close();
+    })
+    .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+    });
 }
 
 function submitConfirmationForm(card) {
-    return api.deleteCard(card._id)
+    api.deleteCard(card._id)
 
-        .then(() => {
-            card.removeCard();
-            popupConfirmation.close();
-        })
-        .catch((error) => {
-            console.log(`Ошибка: ${error}`);
-        });
+    .then(() => {
+        card.removeCard();
+        popupConfirmation.close();
+    })
+    .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+    });
 }
 
 function handleCardClick(event) {
@@ -103,25 +103,25 @@ function handleCardClick(event) {
 }
 
 function uploadAddLike(card) {
-    return api.addLike(card._id)
-        .then((data) => {
-            card.like();
-            card.countLikes(data);
-        })
-        .catch((error) => {
-            console.log(`Ошибка: ${error}`);
-        });
+    api.addLike(card._id)
+    .then((data) => {
+        card.like();
+        card.updateLikes(data);
+    })
+    .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+    });
 }
 
 function uploadRemoveLike(card) {
-    return api.removeLike(card._id)
-        .then((data) => {
-            card.dislike();
-            card.countLikes(data);
-        })
-        .catch((error) => {
-            console.log(`Ошибка: ${error}`);
-        });
+    api.removeLike(card._id)
+    .then((data) => {
+        card.dislike();
+        card.updateLikes(data);
+    })
+    .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+    });
 }
 
 function generateNewCard(card) {
