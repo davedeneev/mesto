@@ -1,6 +1,6 @@
 # Проект: Место
 
-**Проект доступен по ссылке на** [GitHub Pages](https://davedeneev.github.io/mesto/index.html)
+**Проект доступен по ссылке: ** [GitHub Pages](https://davedeneev.github.io/mesto/index.html)
 
 ### Описание
 
